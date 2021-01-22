@@ -21,12 +21,33 @@ list = [ 0, 3, 5, 4, -5, 10, 1, 90 ]
 p my_min_1(list)
 p my_min_2(list)
 
-def largest_contiguous_subsum(list)
+def largest_contiguous_subsum_1(list)
     subs = []     
     (0...list.length).each do |s|
         (s...list.length).each do |e|
-
-
-
+            subs << list[s..e]
+        end
+    end
+    sums = []
+    subs.each { |arr| sums << arr.sum }
+    sums.max
 end
 
+
+ list = [5, 3, -7]
+p largest_contiguous_subsum_1(list)
+
+
+def largest_contiguous_subsum_2(list)
+   current_sum = []
+   largest_sum = list.first
+   
+   list.each do |ele|
+    current_sum << ele  
+    largest_sum = current_sum.sum if largest_sum < current_sum.sum
+   end
+   largest_sum
+end
+
+list = [2, 3, -6, 7, -6, 7]
+p largest_contiguous_subsum_2(list)
