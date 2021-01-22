@@ -34,17 +34,35 @@ def largest_contiguous_subsum_1(list)
 end
 
 
- list = [5, 3, -7]
+ list = [-5, -1, -3]
 p largest_contiguous_subsum_1(list)
 
 
 def largest_contiguous_subsum_2(list)
-   current_sum = 0
-   largest_sum = 0
-    (0..list.length-1).each |i|       # 2
-        current_sum = list[0..i].sum    # [2, 3, -6, 7] = 
-       largest_sum = current_sum if largest_sum < current_sum  # largest_sum = 5 
+    all_neg = list.all? { |ele| ele < 0 }
+    if all_neg
+        return list.max
+    else
+        current_sum = 0
+        largest_sum = 0
+        (0..list.length-1).each do |i|  
+            if current_sum + list[i] > 0
+                current_sum += list[i]
+            else
+                current_sum = 0
+            end
+            largest_sum = current_sum if current_sum > largest_sum
+        end
+    end
+    largest_sum
+        
 end
 
-list = [2, 3, -6, 7, -6, 7]
-p largest_contiguous_subsum_2(list)
+list1 = [-5, -1, -3] # -1
+p largest_contiguous_subsum_2(list1)
+
+list2 = [2, 3, -6, 7, -6, 7] # 8
+p largest_contiguous_subsum_2(list2)
+
+# if current sum below zero, cut losses
+# each element we see, do we update sum?
